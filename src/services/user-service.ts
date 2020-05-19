@@ -15,7 +15,7 @@ export async function getUserById(id: number): Promise<User[]> {
 }
 
 export async function getUsers(): Promise<User[]> {
-    const result = await db.query(`SELECT * FROM "User"`);
+    const result = await db.query(`SELECT * FROM "User" ORDER BY "userid" ASC`);
     return result.rows;
 }
 

@@ -5,7 +5,7 @@ class User {
         if (!obj) {
             return;
         }
-        this.userId = obj.userId;
+        this.userid = obj.userid;
         this.username = obj.username;
         this.password = obj.password;
         this.firstName = obj.firstname;

@@ -12,23 +12,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const pg_connector_1 = __importDefault(require("../util/pg-connector"));
-function getReimbursementByStatus(statusId) {
+function getReimbursementByStatus(id) {
     return __awaiter(this, void 0, void 0, function* () {
-        const result = yield pg_connector_1.default.query(`SELECT * FROM "reimbursement" WHERE status = $1`, [statusId]);
+        const result = yield pg_connector_1.default.query(`SELECT * FROM "reimbursement" WHERE status = $1 ORDER BY "reimbursementid" ASC`, [id]);
         return result.rows;
     });
 }
 exports.getReimbursementByStatus = getReimbursementByStatus;
 function getReimbursementByUser(id) {
     return __awaiter(this, void 0, void 0, function* () {
-        const result = yield pg_connector_1.default.query(`SELECT * FROM "reimbursement" WHERE author = $1`, [id]);
+        const result = yield pg_connector_1.default.query(`SELECT * FROM "reimbursement" WHERE author = $1 ORDER BY "reimbursementid" ASC`, [id]);
         return result.rows;
     });
 }
 exports.getReimbursementByUser = getReimbursementByUser;
 function getReimbursements() {
     return __awaiter(this, void 0, void 0, function* () {
-        const result = yield pg_connector_1.default.query(`SELECT * FROM "reimbursement"`);
+        const result = yield pg_connector_1.default.query(`SELECT * FROM "reimbursement" ORDER BY "reimbursementid" ASC`);
         return result.rows;
     });
 }

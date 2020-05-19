@@ -22,15 +22,23 @@ const express_1 = __importDefault(require("express"));
 const userService = __importStar(require("../services/user-service"));
 const reimbursementService = __importStar(require("../services/reimbursement-service"));
 const Reimbursement_1 = __importDefault(require("../models/Reimbursement"));
+let jwt = require('jsonwebtoken');
 const userRouter = express_1.default.Router();
-userRouter.get('/user/:id', (request, response) => __awaiter(this, void 0, void 0, function* () {
+userRouter.get('/profile/:id', (request, response) => __awaiter(this, void 0, void 0, function* () {
     const id = parseInt(request.params.id);
-    const user = yield userService.getUserById(id);
-    if (user) {
-        response.status(200).json(user);
+    let userIdToken = request.token.userid;
+    let userRole = request.token.role;
+    try {
+        if (userIdToken === id || userRole === 1) {
+            const user = yield userService.getUserById(id);
+            response.status(200).json(user);
+        }
+        else {
+            response.status(400).json({ message: 'You are Unauthorized to access this resource!' });
+        }
     }
-    else {
-        response.sendStatus(400);
+    catch (_a) {
+        response.status(400).json({ message: 'You are Unauthorized to access this resource!' });
     }
 }));
 userRouter.post('/reimbursements/postexpense', (request, response) => {
@@ -47,12 +55,19 @@ userRouter.post('/reimbursements/postexpense', (request, response) => {
 });
 userRouter.get('/reimbursements/userid/:id', (request, response) => __awaiter(this, void 0, void 0, function* () {
     const id = parseInt(request.params.id);
-    const reimbursement = yield reimbursementService.getReimbursementByUser(id);
-    if (reimbursement) {
-        response.status(200).json(reimbursement);
+    let userIdToken = request.token.userid;
+    let userRole = request.token.role;
+    try {
+        if (userIdToken === id || userRole === 1) {
+            const reimbursement = yield reimbursementService.getReimbursementByUser(id);
+            response.status(200).json(reimbursement);
+        }
+        else {
+            response.status(400).json({ message: 'You are Unauthorized to access this resource!' });
+        }
     }
-    else {
-        response.sendStatus(400);
+    catch (_b) {
+        response.status(400).json({ message: 'You are Unauthorized to access this resource!' });
     }
 }));
 exports.default = userRouter;

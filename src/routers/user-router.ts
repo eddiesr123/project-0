@@ -13,10 +13,10 @@ userRouter.get('/profile/:id',
         const id = parseInt(request.params.id);
 
         let userIdToken = request.token.userid;
-        console.log(userIdToken);
+        let userRole = request.token.role;
 
         try {
-        if (userIdToken == id) {
+        if (userIdToken === id || userRole === 1) {
           const user = await userService.getUserById(id);
 
           response.status(200).json(user);
@@ -49,11 +49,11 @@ userRouter.get('/reimbursements/userid/:id',
     async (request: any, response: Response) => {
         const id = parseInt(request.params.id);
 
-        const userIdToken = request.token.userid;
-        console.log(userIdToken);
+        let userIdToken = request.token.userid;
+        let userRole = request.token.role;
 
         try {
-            if (userIdToken == id) {
+            if (userIdToken === id || userRole === 1) {
             const reimbursement = await reimbursementService.getReimbursementByUser(id);
 
             response.status(200).json(reimbursement);

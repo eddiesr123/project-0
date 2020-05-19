@@ -3,17 +3,17 @@ import db from '../util/pg-connector';
 
 
 export async function getReimbursementByStatus(id: number): Promise<Reimbursement[]> {
-    const result = await db.query(`SELECT * FROM "reimbursement" WHERE status = $1`, [id]);
+    const result = await db.query(`SELECT * FROM "reimbursement" WHERE status = $1 ORDER BY "reimbursementid" ASC`, [id]);
     return result.rows;
 }
 
 export async function getReimbursementByUser(id: number): Promise<Reimbursement[]> {
-    const result = await db.query(`SELECT * FROM "reimbursement" WHERE author = $1`, [id]);
+    const result = await db.query(`SELECT * FROM "reimbursement" WHERE author = $1 ORDER BY "reimbursementid" ASC`, [id]);
     return result.rows;
 }
 
 export async function getReimbursements(): Promise<Reimbursement[]> {
-    const result = await db.query(`SELECT * FROM "reimbursement"`);
+    const result = await db.query(`SELECT * FROM "reimbursement" ORDER BY "reimbursementid" ASC`);
     return result.rows;
 }
 

@@ -28,7 +28,9 @@ adminLoginRouter.post('', async (request: Request, response: Response) => {
 
             //provides the token if the login credentials are true.
             response.status(200).json({
-                admin: username,
+                user: username,
+                userid: user.userid,
+                role: user.role,
                 success: true,
                 token: token
             });

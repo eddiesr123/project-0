@@ -32,13 +32,15 @@ adminLoginRouter.post('', (request, response) => __awaiter(this, void 0, void 0,
     try {
         if (user.role == 1) {
             if (user.username && user.password) {
-                const token = jwt.sign({ userId: user.userId, role: user.role }, "myadminsecret", //this is the secret key
+                const token = jwt.sign({ userid: user.userid, role: user.role }, "myadminsecret", //this is the secret key
                 //sets expiration for the token
                 { expiresIn: "24hr"
                 });
                 //provides the token if the login credentials are true.
                 response.status(200).json({
-                    admin: username,
+                    user: username,
+                    userid: user.userid,
+                    role: user.role,
                     success: true,
                     token: token
                 });

@@ -28,7 +28,7 @@ function getUserById(id) {
 exports.getUserById = getUserById;
 function getUsers() {
     return __awaiter(this, void 0, void 0, function* () {
-        const result = yield pg_connector_1.default.query(`SELECT * FROM "User"`);
+        const result = yield pg_connector_1.default.query(`SELECT * FROM "User" ORDER BY "userid" ASC`);
         return result.rows;
     });
 }
@@ -37,8 +37,8 @@ function patchUsers(patch) {
     return __awaiter(this, void 0, void 0, function* () {
         const result = yield pg_connector_1.default.query(`UPDATE "User" SET username = COALESCE($1, username), \ 
         password = COALESCE($2, password), \ firstName = COALESCE($3, firstname), \ lastName = COALESCE($4, lastname), \
-        email = COALESCE($5, email),\ role = COALESCE($6, role) WHERE userId = $7 \
-        RETURNING username, password, firstname, lastname, email, role, userId;`, [patch.username, patch.password, patch.firstName, patch.lastName, patch.email, patch.role, patch.userId]);
+        email = COALESCE($5, email),\ role = COALESCE($6, role) WHERE userid = $7 \
+        RETURNING username, password, firstname, lastname, email, role, userid;`, [patch.username, patch.password, patch.firstName, patch.lastName, patch.email, patch.role, patch.userid]);
         if (result.rowCount === 0) {
         }
         else {

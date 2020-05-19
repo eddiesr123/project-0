@@ -21,6 +21,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const userService = __importStar(require("../services/user-service"));
 const reimbursementService = __importStar(require("../services/reimbursement-service"));
+let jwt = require('jsonwebtoken');
 const adminRouter = express_1.default.Router();
 adminRouter.get('/getusers', (request, response) => __awaiter(this, void 0, void 0, function* () {
     const user = yield userService.getUsers();
@@ -31,7 +32,7 @@ adminRouter.get('/getusers', (request, response) => __awaiter(this, void 0, void
         response.sendStatus(400);
     }
 }));
-adminRouter.get('/user/:id', (request, response) => __awaiter(this, void 0, void 0, function* () {
+adminRouter.get('/getusers/:id', (request, response) => __awaiter(this, void 0, void 0, function* () {
     const id = parseInt(request.params.id);
     const user = yield userService.getUserById(id);
     if (user) {
@@ -77,7 +78,7 @@ adminRouter.patch('/reimbursements/resolve', (request, response) => __awaiter(th
     const updatedReimbursement = yield reimbursementService.updateReimbursements(update);
     if (updatedReimbursement) {
         response.json(updatedReimbursement);
-        response.sendStatus(200);
+        response.status(200);
     }
     else {
         response.status(400).json({ message: 'Please enter a valid ID for Reimbursement!' });
